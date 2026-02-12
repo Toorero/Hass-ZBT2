@@ -1,0 +1,11 @@
+# Prerequisite: Install Podman
+
+install -m 644 99-zbt2.rules /etc/udev/rules.d/99-zbt2.rules
+install -m 644 homeassistant.container /etc/containers/systemd/homeassistant.container
+install -m 644 matter.container /etc/containers/systemd/matter.container
+
+systemctl daemon-reload
+systemctl start homeassistant.service matter.service
+systemctl enable --now podman-auto-update.timer
+
+udevadm control --reload-rules && udevadm trigger

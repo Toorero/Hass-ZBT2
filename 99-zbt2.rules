@@ -1,0 +1,7 @@
+# Disable USB autosuspend for Home Assistant ZBT-2
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="303a", ATTR{idProduct}=="831a", \
+  ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
+# When the ZBT-2 tty appears, (re)start the Home Assistant container service
+ACTION=="add", SUBSYSTEM=="tty", ATTRS{idVendor}=="303a", ATTRS{idProduct}=="831a", \
+  ATTR{power/control}="on", \
+  RUN+="/usr/bin/systemctl restart homeassistant.service"

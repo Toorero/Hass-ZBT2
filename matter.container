@@ -1,0 +1,25 @@
+[Unit]
+Description=Matter Server
+Wants=network-online.target
+After=network-online.target
+
+[Container]
+ContainerName=matter
+Image=ghcr.io/matter-js/python-matter-server:stable
+AutoUpdate=registry
+
+#mDNS discovery
+Network=host
+
+# Bluetooth onboarding
+Volume=/run/dbus:/run/dbus:ro
+
+Volume=/opt/homeassistant/matter/data:/data
+Volume=/etc/localtime:/etc/localtime:ro
+
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
